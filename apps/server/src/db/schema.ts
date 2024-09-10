@@ -1,5 +1,6 @@
 import { pgTable, text, integer, timestamp } from 'drizzle-orm/pg-core'
 import { createId } from '@paralleldrive/cuid2'
+import { InferInsertModel } from 'drizzle-orm'
 
 export const goals = pgTable('goals', {
   id: text('id').primaryKey().$defaultFn(createId),
@@ -9,6 +10,8 @@ export const goals = pgTable('goals', {
     .notNull()
     .defaultNow(),
 })
+
+export type InsertGoal = InferInsertModel<typeof goals>
 
 export const goalCompletions = pgTable('goals_completions', {
   id: text('id').primaryKey().$defaultFn(createId),
