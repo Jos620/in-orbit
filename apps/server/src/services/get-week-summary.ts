@@ -76,7 +76,9 @@ export async function getWeekSummary() {
     })
     .from(goalsCompletedByWeekDay)
 
+  const summary = result[0]
+
   return {
-    summary: result,
+    summary,
   }
 }
