@@ -1,5 +1,5 @@
 import { db } from '../db'
-import { InsertGoal, goals } from '../db/schema'
+import { type InsertGoal, goals } from '../db/schema'
 
 interface CreateGoalRequest {
   params: InsertGoal
