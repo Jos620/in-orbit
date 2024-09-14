@@ -1,22 +1,35 @@
+'use client'
+
+import { useMemo } from 'react'
+import dayjs from 'dayjs'
+import ptBR from 'dayjs/locale/pt-br'
 import { InOrbitIcon } from '~/components/icon/in-orbit'
 import { CreateGoalButton } from './create-goal-button'
 import { Progress, ProgressIndicator } from '~/components/ui/progress-bar'
 import { Separator } from '~/components/ui/separator'
 import { OutlineButton } from '~/components/ui/outline-button'
 import { CheckCircle2, Plus } from 'lucide-react'
+import { useQuery } from '@tanstack/react-query'
+import { getSummary } from '~/services/get-summary'
 
-interface CompletedGoal {
-  date: string
-  dayName: string
-  goals: {
-    name: string
-    completedAt: string
-  }[]
-}
+dayjs.locale(ptBR)
 
 export function Summary() {
-  const goalsCount = 15
-  const completedGoalsCount = 8
+  const { data: summary } = useQuery({
+    queryKey: ['summary'],
+    queryFn: getSummary,
+    staleTime: 1000 * 60, // 1 minute
+  })
+
+  const firstDayOfWeek = dayjs().startOf('week').format('D MMM')
+  const lastDayOfWeek = dayjs().endOf('week').format('D MMM')
+
+  const completedPercentage = useMemo(() => {
+    if (!summary) return 0
+
+    const percentage = (summary.completed / summary.total) * 100
+    return Math.round(percentage)
+  }, [summary])
 
   const goals: string[] = [
     'Meditar',
@@ -25,28 +38,14 @@ export function Summary() {
     'Me alimentar bem',
   ]
 
-  const completedGoals: CompletedGoal[] = [
-    {
-      date: '10 de Agosto',
-      dayName: 'Domingo',
-      goals: [
-        { name: 'Acordar Cedo', completedAt: '08:13h' },
-        { name: 'Acordar Cedo', completedAt: '08:13h' },
-      ],
-    },
-    {
-      date: '11 de Agosto',
-      dayName: 'Segunda',
-      goals: [{ name: 'Acordar Cedo', completedAt: '08:13h' }],
-    },
-  ]
-
   return (
     <div className="py-10 px-5 max-w-[30rem] mx-auto flex flex-col gap-6">
       <header className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <InOrbitIcon />
-          <span className="text-lg font-semibold">5 a 10 de Agosto</span>
+          <span className="text-lg font-semibold capitalize">
+            {firstDayOfWeek} - {lastDayOfWeek}
+          </span>
         </div>
 
         <CreateGoalButton
@@ -57,18 +56,18 @@ export function Summary() {
       </header>
 
       <main className="flex flex-col gap-3">
-        <Progress value={completedGoalsCount} max={goalsCount}>
-          <ProgressIndicator style={{ width: '50%' }} />
+        <Progress value={summary?.completed} max={summary?.total}>
+          <ProgressIndicator style={{ width: `${completedPercentage}%` }} />
         </Progress>
 
         <div className="flex items-center justify-between text-xs text-zinc-400">
           <span>
             Você completou{' '}
-            <span className="text-zinc-100">{completedGoalsCount}</span> de{' '}
-            <span className="text-zinc-100">{goalsCount}</span> metas nessa
+            <span className="text-zinc-100">{summary?.completed}</span> de{' '}
+            <span className="text-zinc-100">{summary?.total}</span> metas nessa
             semana.
           </span>
-          <span>50%</span>
+          <span>{completedPercentage}%</span>
         </div>
 
         <Separator />
@@ -85,32 +84,47 @@ export function Summary() {
         <div className="flex flex-col gap-6">
           <h2 className="text-xl font-medium">Sua semana</h2>
 
-          {completedGoals.map(completedGoal => (
-            <div key={completedGoal.date} className="flex flex-col gap-4">
-              <h3 className="font-medium">
-                {completedGoal.dayName}{' '}
-                <span className="text-zinc-400 text-xs">
-                  ({completedGoal.date})
-                </span>
-              </h3>
+          {summary?.goalsPerDay &&
+            Object.entries(summary.goalsPerDay).map(([date, goals]) => {
+              const weekDay = dayjs(date).format('dddd')
+              const formatedDate = dayjs(date).format('D[ de ]MMMM')
 
-              <ul className="flex flex-col gap-3">
-                {completedGoal.goals.map(goal => (
-                  <li
-                    key={goal.completedAt}
-                    className="flex items-center gap-2"
-                  >
-                    <CheckCircle2 className="size-4 text-pink-500" />
-                    <span className="text-sm text-zinc-400">
-                      Você completou{' '}
-                      <span className="text-zinc-100">"{goal.name}"</span> às{' '}
-                      <span className="text-zinc-100">{goal.completedAt}</span>
+              return (
+                <div key={date} className="flex flex-col gap-4">
+                  <h3 className="font-medium">
+                    <span className="capitalize">{weekDay}</span>{' '}
+                    <span className="text-zinc-400 text-xs">
+                      ({formatedDate})
                     </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+                  </h3>
+
+                  <ul className="flex flex-col gap-3">
+                    {goals.map(goal => {
+                      const completedAt = dayjs(goal.completedAt).format(
+                        'HH:mm'
+                      )
+
+                      return (
+                        <li
+                          key={goal.completedAt}
+                          className="flex items-center gap-2"
+                        >
+                          <CheckCircle2 className="size-4 text-pink-500" />
+                          <span className="text-sm text-zinc-400">
+                            Você completou{' '}
+                            <span className="text-zinc-100">
+                              "{goal.title}"
+                            </span>{' '}
+                            às{' '}
+                            <span className="text-zinc-100">{completedAt}</span>
+                          </span>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </div>
+              )
+            })}
         </div>
       </main>
     </div>
