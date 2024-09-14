@@ -23,7 +23,7 @@ const button = tv({
   },
 })
 
-type ButtonProps = ComponentProps<'button'> & VariantProps<typeof button>
+export type ButtonProps = ComponentProps<'button'> & VariantProps<typeof button>
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, ...props }, ref) => {

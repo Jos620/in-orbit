@@ -1,10 +1,8 @@
 import Image from 'next/image'
-import { Plus } from 'lucide-react'
 
 import fullLogo from '../_assets/full-logo.svg'
 import letsStartIllustration from '../_assets/lets-start-illustration.svg'
-import { Button } from '~/components/ui/button'
-import { DialogTrigger } from '~/components/ui/dialog'
+import { CreateGoalButton } from './create-goal-button'
 
 export function EmptyGoals() {
   return (
@@ -16,12 +14,7 @@ export function EmptyGoals() {
         Você ainda não cadastrou nenhuma meta, que tal cadastrar um agora mesmo?
       </p>
 
-      <DialogTrigger asChild>
-        <Button>
-          <Plus className="size-4" />
-          Cadastrar meta
-        </Button>
-      </DialogTrigger>
+      <CreateGoalButton />
     </div>
   )
 }
