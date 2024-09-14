@@ -3,6 +3,7 @@ import '~/styles/globals.css'
 import type { Metadata } from 'next'
 import { Dialog, DialogContent } from '~/components/ui/dialog'
 import { CreateGoal } from './_components/create-goal'
+import { AppProvider } from '~/context'
 
 export const metadata: Metadata = {
   title: 'in.orbit',
@@ -15,13 +16,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-zinc-950 text-zinc-50 antialiased">
-        <Dialog>
-          {children}
+        <AppProvider>
+          <Dialog>
+            {children}
 
-          <DialogContent>
-            <CreateGoal />
-          </DialogContent>
-        </Dialog>
+            <DialogContent>
+              <CreateGoal />
+            </DialogContent>
+          </Dialog>
+        </AppProvider>
       </body>
     </html>
   )
