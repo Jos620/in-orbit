@@ -7,10 +7,10 @@ import { InOrbitIcon } from '~/components/icon/in-orbit'
 import { CreateGoalButton } from './create-goal-button'
 import { Progress, ProgressIndicator } from '~/components/ui/progress-bar'
 import { Separator } from '~/components/ui/separator'
-import { OutlineButton } from '~/components/ui/outline-button'
-import { CheckCircle2, Plus } from 'lucide-react'
+import { CheckCircle2 } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import { getSummary } from '~/services/get-summary'
+import { PendingGoals } from './pending-goals'
 
 dayjs.locale(ptBR)
 
@@ -30,13 +30,6 @@ export function Summary() {
     const percentage = (summary.completed / summary.total) * 100
     return Math.round(percentage)
   }, [summary])
-
-  const goals: string[] = [
-    'Meditar',
-    'Nadar',
-    'Praticar Exercícios',
-    'Me alimentar bem',
-  ]
 
   return (
     <div className="py-10 px-5 max-w-[30rem] mx-auto flex flex-col gap-6">
@@ -72,14 +65,7 @@ export function Summary() {
 
         <Separator />
 
-        <div className="flex flex-wrap gap-3">
-          {goals.map(goal => (
-            <OutlineButton key={goal}>
-              <Plus className="size-4 text-zinc-600" />
-              {goal}
-            </OutlineButton>
-          ))}
-        </div>
+        <PendingGoals />
 
         <div className="flex flex-col gap-6">
           <h2 className="text-xl font-medium">Sua semana</h2>
