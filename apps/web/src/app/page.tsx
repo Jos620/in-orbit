@@ -3,6 +3,7 @@ import { Plus } from 'lucide-react'
 
 import fullLogo from './_assets/full-logo.svg'
 import letsStartIllustration from './_assets/lets-start-illustration.svg'
+import { Button } from '~/components/ui/button'
 
 export default function HomePage() {
   return (
@@ -14,13 +15,10 @@ export default function HomePage() {
         Você ainda não cadastrou nenhuma meta, que tal cadastrar um agora mesmo?
       </p>
 
-      <button
-        type="button"
-        className="px-4 py-2.5 rounded-lg bg-violet-500 text-violet-50 flex items-center gap-2 text-sm font-medium tracking-tight hover:bg-violet-600"
-      >
+      <Button>
         <Plus className="size-4" />
         Cadastrar meta
-      </button>
+      </Button>
     </main>
   )
 }
