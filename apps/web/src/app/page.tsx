@@ -1,20 +1,32 @@
-'use client'
-
-import { useQuery } from '@tanstack/react-query'
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import { EmptyGoals } from './_components/empty-goals'
 import { Summary } from './_components/summary'
 import { getSummary } from '~/services/get-summary'
+import { getQueryClient } from '~/context/react-query/client'
+import { getPendingGoals } from '~/services/get-pending-goals'
 
-export default function HomePage() {
-  const { data: summary } = useQuery({
-    queryKey: ['summary'],
-    queryFn: getSummary,
-    staleTime: 1000 * 60, // 1 minute
+export default async function HomePage() {
+  const queryClient = getQueryClient()
+
+  const pendingGoals = await getPendingGoals()
+
+  await queryClient.prefetchQuery({
+    queryKey: ['pending-goals'],
+    initialData: pendingGoals,
   })
 
-  if (summary && summary.total > 0) {
-    return <Summary />
+  if (pendingGoals.length < 1) {
+    return <EmptyGoals />
   }
 
-  return <EmptyGoals />
+  await queryClient.prefetchQuery({
+    queryKey: ['summary'],
+    queryFn: getSummary,
+  })
+
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <Summary />
+    </HydrationBoundary>
+  )
 }
