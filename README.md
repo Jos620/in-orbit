@@ -26,11 +26,21 @@ This project is structured as a monorepo, built with [Turbo Repo][Turbo-Repo-url
 
 ### Built With
 
+[![Docker][Docker]][Docker-url]
+[![Turbo Repo][TurboRepo]][Turbo-Repo-url]
+[![TypeScript][TypeScript]][TypeScript-url]
+[![Fastify][Fastify]][Fastify-url]
 [![Next][Next.js]][Next-url]
 [![React][React.js]][React-url]
-[![Turbo Repo][TurboRepo]][Turbo-Repo-url]
+[![Postgres][Postgres]][Postgres-url]
+[![Drizzle][Drizzle]][Drizzle-url]
 [![TailwindCSS][TailwindCSS]][TailwindCSS-url]
-[![Fastify][Fastify]][Fastify-url]
+[![Zod][Zod]][Zod-url]
+[![Radix][Radix]][Radix-url]
+[![React Hook Form][RHF]][RHF-url]
+[![Tanstack Query][TanstackQuery]][TanstackQuery-url]
+[![Lucide][Lucide]][Lucide-url]
+[![Day.js][Day.js]][Day.js-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -161,15 +171,25 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 [TailwindCSS-url]: https://tailwindcss.com/
 [Fastify]: https://img.shields.io/badge/Fastify-20232A?style=for-the-badge&logo=fastify&logoColor=white
 [Fastify-url]: https://www.fastify.io/
+[Docker]: https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white
 [Docker-url]: https://docs.docker.com/get-started/
+[Typescript]: https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white
 [TypeScript-url]: https://www.typescriptlang.org/
 [Biome-url]: https://biomejs.dev/
+[Drizzle]: https://img.shields.io/badge/Drizzle-000000?style=for-the-badge&logo=drizzle&logoColor=white
 [Drizzle-url]: https://orm.drizzle.team/
+[Zod]: https://img.shields.io/badge/Zod-2C8EBB?style=for-the-badge&logo=zod&logoColor=white
 [Zod-url]: https://zod.dev/
+[Radix]: https://img.shields.io/badge/Radix-000000?style=for-the-badge&logo=radix-ui&logoColor=white
 [Radix-url]: https://www.radix-ui.com/
 [T3-url]: https://create.t3.gg/
+[TanstackQuery]: https://img.shields.io/badge/Tanstack%20Query-000000?style=for-the-badge&logo=react&logoColor=61DAFB
 [TanstackQuery-url]: https://tanstack.com/query/5
+[Day.js]: https://img.shields.io/badge/Day.js-000000?style=for-the-badge&logo=javascript&logoColor=F7DF1E
 [Day.js-url]: https://day.js.org/
+[Lucide]: https://img.shields.io/badge/Lucide-000000?style=for-the-badge&logo=svg&logoColor=white
 [Lucide-url]: https://lucide.dev/
+[RHF]: https://img.shields.io/badge/React%20Hook%20Form-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [RHF-url]: https://react-hook-form.com/
+[Postgres]: https://img.shields.io/badge/Postgres-336791?style=for-the-badge&logo=postgresql&logoColor=white
 [Postgres-url]: https://www.postgresql.org/
