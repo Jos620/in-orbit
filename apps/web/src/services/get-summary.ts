@@ -1,3 +1,5 @@
+import { env } from '~/env'
+
 interface Summary {
   completed: number
   total: number
@@ -12,7 +14,9 @@ interface Summary {
 }
 
 export async function getSummary(): Promise<Summary> {
-  const response = await fetch('http://localhost:3333/summary')
+  const response = await fetch(`${env.NEXT_PUBLIC_API_URL}/summary`, {
+    cache: 'no-cache',
+  })
   const { summary } = await response.json()
 
   return summary
